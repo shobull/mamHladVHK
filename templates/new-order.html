@@ -1,0 +1,95 @@
+<h1>Nová objednávka</h1>
+
+<form class="form-horizontal" name="newOrderForm">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="form-group" ng-class="{'has-error': isInvalid('inputFood')}">
+                    <label for="inputFood" class="col-sm-2 control-label">Jídlo</label>
+
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="inputFood" name="inputFood" placeholder="Jídlo"
+                               ng-model="order.food" ng-required="validateInput" focus-me/>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" name="inputAmount" id="inputAmount" ng-model="order.amount">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="form-group" ng-class="{'has-error': isInvalid('inputStreet')}">
+                    <label for="inputStreet" class="col-sm-2 control-label">Ulice</label>
+
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="inputStreet" name="inputStreet" placeholder="Ulice"
+                               ng-model="order.street" ng-required="validateInput"/>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="inputZip" name="inputZip" placeholder="č. popisné"
+                               ng-model="order.zip"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="form-group" ng-class="{'has-error': isInvalid('inputPhone')}">
+                    <label for="inputPhone" class="col-sm-2 control-label">Telefon</label>
+
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="inputPhone" name="inputPhone" placeholder="Telefon"
+                               ng-model="order.phone" ng-required="validateInput" ng-pattern="phoneNumberPattern"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="form-group">
+                    <label for="inputNote" class="col-sm-2 control-label">Poznámka</label>
+
+                    <div class="col-sm-8">
+                        <textarea class="form-control" id="inputNote" name="inputNote" placeholder="Poznámka"
+                                  ng-model="order.note"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="form-group">
+
+                    <div class="col-sm-offset-2 col-sm-8">
+
+                        <button type="submit" class="btn btn-success">Uložit</button>
+                        <button type="button" class="btn btn-danger" ng-click="clear()">Vymazat</button>
+
+                        <div>
+                            <input type="checkbox" ng-model="validateInput" id="validateInput"/>
+                            <label for="validateInput">Validace vstupních polí</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{order | json}}
+
+
+</form>
