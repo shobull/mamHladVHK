@@ -1,20 +1,38 @@
 <h1>Nová objednávka</h1>
 
-<form class="form-horizontal" name="newOrderForm">
+<form class="form-horizontal" name="newOrderForm" focus-iter="input,textarea,button" novalidate>
     <div class="row">
         <div class="col-sm-10">
-            <div class="row">
-                <div class="form-group" ng-class="{'has-error': isInvalid('inputFood')}">
-                    <label for="inputFood" class="col-sm-2 control-label">Jídlo</label>
+            <div class="row" ng-repeat="food in order.foods" ng-form="subForm">
+                <div class="form-group"
+                     ng-class="{'has-error': isFormInvalid(subForm)}">
+
+                    <label for="inputFood" class="col-sm-2 control-label">{{$index+1}}. Jídlo</label>
 
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="inputFood" name="inputFood" placeholder="Jídlo"
-                               ng-model="order.food" ng-required="validateInput" focus-me/>
+                               ng-model="food.food" ng-required="validateInput" focus-me/>
                     </div>
 
                     <div class="col-sm-2">
-                        <input type="number" class="form-control" name="inputAmount" id="inputAmount"
-                               ng-model="order.amount">
+                        <input type="number" class="form-control left input-amount" name="inputAmount" id="inputAmount"
+                               ng-model="food.amount">
+                        <span class="left amount">ks</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="form-group">
+
+                    <div class="col-sm-offset-2 col-sm-8">
+
+                        <button type="button" class="btn btn-primary" ng-click="newFood($event)">Další jídlo</button>
+
                     </div>
                 </div>
             </div>
@@ -32,8 +50,9 @@
                                ng-model="order.street" ng-required="validateInput"/>
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control" id="inputZip" name="inputZip" placeholder="č. popisné"
-                               ng-model="order.zip"/>
+                        <input type="text" class="form-control" id="inputStreetNumber" name="inputStreetNumber"
+                               placeholder="č. popisné"
+                               ng-model="order.streetNumber"/>
                     </div>
                 </div>
             </div>
@@ -65,6 +84,7 @@
                         <textarea class="form-control" id="inputNote" name="inputNote" placeholder="Poznámka"
                                   ng-model="order.note"></textarea>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -90,3 +110,5 @@
         </div>
     </div>
 </form>
+
+{{order | json}}

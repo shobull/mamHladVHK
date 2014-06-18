@@ -24,13 +24,13 @@
 
     <script src="js/angular.min.js"></script>
     <script src="js/angular-route.min.js"></script>
-    <script src="js/my.js"></script>
-    <script src="js/routes.js"></script>
-    <script src="js/controllers.js"></script>
+    <script src="angular/my.js"></script>
+    <script src="angular/routes.js"></script>
+    <script src="angular/controllers.js"></script>
+    <script src="angular/directives.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function()
-        {
+        $(document).ready(function () {
             setInterval('updateClock()', 1000);
         });
     </script>
@@ -68,10 +68,13 @@
         <div class="col-sm-3 col-md-3 sidebar">
             <ul class="nav nav-sidebar">
                 <li ng-class="{ active: isActive('/nova-objednavka') }">
-                    <a href="#/nova-objednavka" ng-click="new-order"><span class="glyphicon glyphicon-plus"></span> Nová objednávka</a>
+                    <a href="#/nova-objednavka" ng-click="new-order"><span class="glyphicon glyphicon-plus"></span> Nová
+                        objednávka</a>
                 </li>
                 <li ng-class="{ active: isActive('/aktualni-objednavky')}">
-                    <a href="#/aktualni-objednavky" ng-click="live-orders"><span class="glyphicon glyphicon-cutlery"></span> Aktuální objednávky <span class="badge pull-right">42</span></a>
+                    <a href="#/aktualni-objednavky" ng-click="live-orders"><span
+                            class="glyphicon glyphicon-cutlery"></span> Aktuální objednávky <span
+                            class="badge pull-right">42</span></a>
                 </li>
                 <li ng-class="{ active: isActive('/historie-objednavek')}">
                     <a href="#/historie-objednavek"><span class="glyphicon glyphicon-tasks"></span> Historie objednávek</a>
