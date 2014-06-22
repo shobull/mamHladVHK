@@ -98,6 +98,28 @@ body {
     width: 70px;
 }
 
+input.food[readonly] {
+    background-color: #d9edf7;
+}
+
+.label.zone {
+    float: right;
+    position: relative;
+    right: 7px;
+    top: -24px;
+}
+
+.street {
+    background-color: #fff;
+    color: #555;
+    float: left;
+    font-size: 14px;
+    left: 13px;
+    padding-left: 0;
+    position: relative;
+    top: -27px;
+}
+
 /*
  * Placeholder dashboard ideas
  */

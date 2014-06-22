@@ -14,7 +14,9 @@ angular.module('menuControllers', ['ui.select2'])
                         amount: 1
                     }
                 ];
-                this.street = "";
+                this.street = {
+                    name: ""
+                };
                 this.streetNumber = "";
                 this.phone = "";
                 this.note = "";
@@ -93,15 +95,16 @@ angular.module('menuControllers', ['ui.select2'])
                 $scope.items = [];
             }
 
-
             // Vyhledava v jidlech pro autocompleter
             $scope.items = [];
             $scope.updateAutocompleter = function (keyword, index) {
                 $scope.showAutocomplete = index;
-                $http.get('/mamhladvhk/php/api/food?q=' + keyword)
+                $http.get('/mamhladvhk/php/api/food/food?q=' + keyword)
                     .then(function (result) {
                         $scope.items = result.data.jidelak;
-                        if ($scope.items.length <= $scope.selectedItem) {
+                        if ($scope.selectedItem == -1) {
+                            $scope.refreshAutocompleter(0);
+                        } else if ($scope.selectedItem >= $scope.items.length) {
                             $scope.refreshAutocompleter($scope.items.length - 1);
                         }
                     });
@@ -109,7 +112,7 @@ angular.module('menuControllers', ['ui.select2'])
 
             $scope.refreshAutocompleter = function (value) {
                 if (value < 0) {
-                    $scope.selectedItem = -1;
+                    $scope.selectedItem = 0;
                 } else if (value < $scope.items.length) {
                     $scope.selectedItem = value;
                 } else {
@@ -136,6 +139,7 @@ angular.module('menuControllers', ['ui.select2'])
                     $scope.deleteFood(index - 1);
                 } else if ($event.which == 39 || $event.which == 37) {
                     // Arrow left or right pressed
+                    console.log("hide");
                     $scope.hideAutocompleter();
                 }
             }
@@ -177,9 +181,83 @@ angular.module('menuControllers', ['ui.select2'])
                 return price;
             }
 
+
+            $scope.selectedStreet = -1;
+
+            // Vyhledava v ulicich pro autocompleter
+            $scope.streets = [];
+            $scope.updateStreetAutocompleter = function (keyword) {
+                $http.get('/mamhladvhk/php/api/street/street?q=' + keyword)
+                    .then(function (result) {
+                        $scope.streets = result.data.ulice;
+                        if ($scope.selectedStreet == -1) {
+                            $scope.refreshStreetAutocompleter(0);
+                        } else if ($scope.selectedStreet >= $scope.streets.length) {
+                            $scope.refreshStreetAutocompleter($scope.streets.length - 1);
+                        }
+                    });
+            }
+
+            // Skryje autocompleter
+            $scope.hideStreetAutocompleter = function () {
+                $scope.selectedStreet = -1;
+                $scope.streets = [];
+            }
+
+            $scope.refreshStreetAutocompleter = function (value) {
+                if (value < 0) {
+                    $scope.selectedStreet = 0;
+                } else if (value < $scope.streets.length) {
+                    $scope.selectedStreet = value;
+                } else {
+                    $scope.selectedStreet = $scope.streets.length - 1;
+                }
+            }
+
+            $scope.moveStreetAutocompleter = function ($event, index) {
+                if ($event.which == 40) {
+                    // Arrow down pressed
+                    $scope.refreshStreetAutocompleter($scope.selectedStreet + 1);
+                    $event.preventDefault();
+                } else if ($event.which == 38) {
+                    // Arrow up pressed
+                    $scope.refreshStreetAutocompleter($scope.selectedStreet - 1);
+                    $event.preventDefault();
+                } else if ($event.which == 13) {
+                    // Enter pressed
+                    $scope.selectStreet(index);
+                } else if ($event.which == 27) {
+                    // Esc pressed
+                    // index - 1 protoze direktiva focusIter oznaci dalsi prvek driv, nez controller smaze aktualni
+                    $scope.deleteStreet(index - 1);
+                } else if ($event.which == 39 || $event.which == 37) {
+                    // Arrow left or right pressed
+                    $scope.hideStreetAutocompleter();
+                }
+            }
+
+            function hiddenStreetAutocompleter() {
+                if ($scope.selectedStreet == -1 || $scope.streets.length == 0) {
+                    return true;
+                }
+                return false;
+            }
+
+            // Zvoli jidlo
+            $scope.selectStreet = function (foodIndex) {
+                if (!hiddenStreetAutocompleter()) {
+                    // Pouze pokud je otevren autocompleter!
+                    var index = $scope.selectedStreet;
+                    $scope.order.street = $scope.streets[index];
+                    $scope.streets = [];
+
+                    $scope.hideStreetAutocompleter();
+                }
+            }
+
+
         }])
-    .
-    controller('OrderListCtrl', ['$scope',
+    .controller('OrderListCtrl', ['$scope',
         function ($scope) {
         }])
     .controller('OrderHistoryCtrl', ['$scope',

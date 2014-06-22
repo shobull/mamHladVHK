@@ -13,15 +13,19 @@
 
                     <div class="col-sm-8">
 
-                        <input type="text" class="form-control" id="inputFood-{{$index}}" name="inputFood"
+                        <input type="text" class="form-control food" id="inputFood-{{$index}}" name="inputFood"
                                placeholder="Název nebo číslo jídla..."
-                               ng-required="validateInput" ng-change="updateAutocompleter(food.food.Name, $index)"
-                               ng-model="food.food.Name" ng-keyup="moveAutocompleter($event, $index)" focus-me/>
+                               ng-required="validateInput"
+                               ng-change="updateAutocompleter(food.food.Name, $index)"
+                               ng-model="food.food.Name"
+                               ng-keyup="moveAutocompleter($event, $index)"
+                               ng-readonly="food.food.Id != null"
+                               focus-me/>
 
                         <ul class="autocomplete" ng-if="showAutocomplete == $index && items.length > 0">
                             <li ng-class="{selected: $index == selectedItem}"
                                 ng-mouseenter="refreshAutocompleter($index)"
-                                ng-mouseleave="refreshAutocompleter(-1)" ng-repeat="item in items"
+                                ng-repeat="item in items"
                                 ng-mousedown="selectFood($parent.$index)">
 
                                 {{item.Number}} - {{item.Name}} <span class="mini">({{item.Nazev}})</span>
@@ -32,7 +36,7 @@
 
                     <div class="col-sm-2">
                         <input type="number" class="form-control left input-amount" name="inputAmount" id="inputAmount"
-                               ng-model="food.amount">
+                               ng-model="food.amount" min="0">
                         <span class="left amount">ks</span>
                     </div>
                 </div>
@@ -54,13 +58,35 @@
                     <label for="inputStreet" class="col-sm-2 control-label">Ulice</label>
 
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="inputStreet" name="inputStreet" placeholder="Ulice"
-                               ng-model="order.street" ng-required="validateInput"/>
+
+                        <input type="text" class="form-control" id="inputStreet" name="inputStreet"
+                               placeholder="Ulice"
+                               ng-required="validateInput"
+                               ng-change="updateStreetAutocompleter(order.street.name)"
+                               ng-model="order.street.name"
+                               ng-keyup="moveStreetAutocompleter($event, $index)"
+                               focus-me/>
+
+                        <span class="label label-primary zone" ng-bind="order.street.zone"></span>
+                        <span class="street col-sm-4" ng-bind="order.street.name"></span>
+
+                        <ul class="autocomplete" ng-if="streets.length > 0">
+                            <li ng-class="{selected: $index == selectedStreet}"
+                                ng-mouseenter="refreshStreetAutocompleter($index)"
+                                ng-repeat="item in streets"
+                                ng-mousedown="selectStreet($parent.$index)">
+
+                                {{item.name}} - {{item.part}}
+                            </li>
+                        </ul>
+
                     </div>
                     <div class="col-sm-2">
                         <input type="text" class="form-control" id="inputStreetNumber" name="inputStreetNumber"
                                placeholder="č. popisné"
                                ng-model="order.streetNumber"/>
+
+
                     </div>
                 </div>
             </div>
