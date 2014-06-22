@@ -1,4 +1,4 @@
-angular.module('menuControllers', [])
+angular.module('menuControllers', ['ui.select2'])
     .controller('OrderCreateCtrl', ['$scope', '$http',
         function ($scope, $http) {
 
@@ -25,12 +25,16 @@ angular.module('menuControllers', [])
             $scope.validateInput = true;
 
             $scope.newFood = function (event) {
+                $scope.createEmptyFood();
+                event.preventDefault();
+            }
+
+            $scope.createEmptyFood = function () {
                 var food = {
                     food: "",
                     amount: 1
                 };
                 $scope.order.foods.push(food);
-                event.preventDefault();
             }
 
             $scope.phoneNumberPattern = (function () {
@@ -65,8 +69,52 @@ angular.module('menuControllers', [])
             $scope.clear = function (order) {
                 $scope.newOrderForm.$setPristine();
                 $scope.order = angular.copy(cleanOrder);
+                $scope.showAutocomplete = -1;
+                $scope.items = [];
             };
 
+            $scope.selectedItem = -1;
+
+            $scope.hideAutocompleter = function () {
+                $scope.showAutocomplete = -1;
+            }
+
+            $scope.isEmpty = function (food) {
+                if (food.Id) {
+                    return true;
+                }
+                return false;
+            }
+
+
+            $scope.items = [];
+            $scope.updateAutocompleter = function (keyword, index) {
+                $scope.showAutocomplete = index;
+                $http.get('/mamhladvhk/php/api/food?q=' + keyword)
+                    .then(function (result) {
+                        $scope.items = result.data.jidelak;
+                    });
+            }
+
+            $scope.selectFood = function (index, foodIndex) {
+                $scope.order.foods[foodIndex].food = $scope.items[index];
+                $scope.items = [];
+                $scope.createEmptyFood();
+            }
+
+            $scope.totalFoodPrice = function (item) {
+                return (item.food.Prize * item.amount);
+            }
+
+            $scope.totalPrice = function () {
+                var price = 0;
+                for (var i = 0; i < $scope.order.foods.length; i++) {
+                    if ($scope.order.foods[i].food.Id != null) {
+                        price += $scope.order.foods[i].amount * $scope.order.foods[i].food.Prize;
+                    }
+                }
+                return price;
+            }
 
         }])
     .controller('OrderListCtrl', ['$scope',

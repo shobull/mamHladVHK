@@ -1,7 +1,8 @@
 angular.module('root.module', [
         'ngRoute',
         'menuControllers',
-        'app.directives'
+        'app.directives',
+        'app.filters'
     ])
     .config(['$routeProvider',
         function ($routeProvider) {
@@ -21,7 +22,8 @@ angular.module('root.module', [
                 when('/inventura', {
                     templateUrl: 'templates/inventory.html',
                     controller: 'InventoryCtrl'
-                }).
+                })
+                .
                 otherwise({
                     redirectTo: '/nova-objednavka'
                 });
@@ -33,15 +35,5 @@ angular.module('root.module', [
                 return viewLocation === $location.path();
             };
 
-        }])
-    .directive('focusMe', function ($timeout, $parse) {
-        return {
-            //scope: true,   // optionally create a child scope
-            link: function (scope, element, attrs) {
-                $timeout(function () {
-                    element[0].focus();
-                });
-            }
-        };
-    });
+        }]);
 

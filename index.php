@@ -7,8 +7,10 @@
     <title>MámHladVHK.cz - Nová objednávka</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/custom.css" rel="stylesheet">
+    <link href="static/css/select2-bootstrap.css" rel="stylesheet">
+    <link href="static/css/select2.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,14 +22,18 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
 
-    <script src="js/angular.min.js"></script>
-    <script src="js/angular-route.min.js"></script>
-    <script src="angular/my.js"></script>
-    <script src="angular/routes.js"></script>
-    <script src="angular/controllers.js"></script>
-    <script src="angular/directives.js"></script>
+    <script src="static/js/angular.min.js"></script>
+    <script src="static/js/angular-route.min.js"></script>
+    <script src="static/angular/my.js"></script>
+    <script src="static/angular/routes.js"></script>
+    <script src="static/angular/controllers.js"></script>
+    <script src="static/angular/directives.js"></script>
+    <script src="static/angular/filters.js"></script>
+    <script src="static/angular/angular-ui-select2.js"></script>
+    <script src="static/js/select2.min.js"></script>
+    <script src="static/js/select2_locale_cs.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
