@@ -26,16 +26,23 @@ angular.module('menuControllers', ['ui.select2'])
 
             // Vytvori novy radek s prazdnym jilem
             $scope.createEmptyFood = function () {
-                var food = {
-                    food: "",
-                    amount: 1
-                };
-                $scope.order.foods.push(food);
+                var lastFoodIndex = $scope.order.foods.length - 1;
+                if ($scope.order.foods[lastFoodIndex].food.Id != null) {
+                    // Pokud neni posledni radek prazdny, tak pridam novy pro dalsi jidlo
+                    var food = {
+                        food: "",
+                        amount: 1
+                    };
+                    $scope.order.foods.push(food);
+                }
             }
 
             $scope.deleteFood = function (index) {
                 if ($scope.order.foods.length > 1) {
+                    console.log("mazu " + index);
                     $scope.order.foods.splice(index, 1);
+                    $scope.createEmptyFood();
+                    $scope.hideAutocompleter()
                 }
             }
 
@@ -125,27 +132,33 @@ angular.module('menuControllers', ['ui.select2'])
                     $scope.selectFood(index);
                 } else if ($event.which == 27) {
                     // Esc pressed
-                    $scope.deleteFood(index);
+                    // index - 1 protoze direktiva focusIter oznaci dalsi prvek driv, nez controller smaze aktualni
+                    $scope.deleteFood(index - 1);
                 } else if ($event.which == 39 || $event.which == 37) {
                     // Arrow left or right pressed
                     $scope.hideAutocompleter();
                 }
             }
 
+            function hiddenAutocompleter() {
+                if ($scope.selectedItem == -1 || $scope.items.length == 0) {
+                    return true;
+                }
+                return false;
+            }
+
             // Zvoli jidlo
             $scope.selectFood = function (foodIndex) {
-                var index = $scope.selectedItem;
-                $scope.order.foods[foodIndex].food = $scope.items[index];
-                $scope.items = [];
+                if (!hiddenAutocompleter()) {
+                    // Pouze pokud je otevren autocompleter!
+                    var index = $scope.selectedItem;
+                    $scope.order.foods[foodIndex].food = $scope.items[index];
+                    $scope.items = [];
 
-                var lastFoodIndex = $scope.order.foods.length - 1;
-
-                if ($scope.order.foods[lastFoodIndex].food.Id != null) {
-                    // Pokud neni posledni radek prazdny, tak pridam novy pro dalsi jidlo
                     $scope.createEmptyFood();
-                }
 
-                $scope.hideAutocompleter();
+                    $scope.hideAutocompleter();
+                }
             }
 
             // Spocita cenu vsech kusu
