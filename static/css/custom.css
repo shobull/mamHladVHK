@@ -120,6 +120,18 @@ body {
     border-radius: 50%;
 }
 
+table tr th.center {
+    padding-left: 15px;
+}
+
+table tr th.right, table tr td.right {
+    text-align: right;
+}
+
+.strong {
+    font-weight: bold;
+}
+
 ul.autocomplete {
     background-color: #f5f5f5;
     border-left: 1px solid #66afe9;
@@ -132,18 +144,18 @@ ul.autocomplete {
     font-size: 14px;
     list-style: none outside none;
     margin: 0;
+    margin-right: 15px;
     padding: 0;
     position: absolute;
-    top: -3px;
+    top: 30px;
     outline: 0;
     z-index: 100;
 }
 
 ul.autocomplete li {
     color: #555;
-    padding: 0px 12px;
-    min-height: 28px;
-    line-height: 28px;
+    line-height: 17px;
+    padding: 6px 12px;
 }
 
 ul.autocomplete li:hover {

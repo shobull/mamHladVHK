@@ -6,10 +6,15 @@ angular.module('app.filters', [])
 
             for (var i = 0; i < item.length; i++) {
                 if (item[i].food.Id != null) {
-                    console.log(item[i].food);
                     array.push(item[i]);
                 }
             }
             return array;
         };
+    })
+
+    .filter('currency', function () {
+        return function (string) {
+            return string + " Kč";
+        }
     })
